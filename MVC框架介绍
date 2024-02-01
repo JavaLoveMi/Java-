@@ -1,0 +1,115 @@
+package com.cskaoyan._19collection._01ds;
+
+import org.junit.Test;
+
+/**
+ * 是一些leetcode题。 是链表相关的题。
+ *
+ * @author Common-zhou
+ * @since 2024-01-30 17:25
+ */
+public class Demo2Linked {
+
+    @Test
+    public void test1() {
+        // 假设，现在让你存储一个班同学的姓名   zs   ls   wu   zl 。用链表存
+        // 1.链表从哪来。
+        Node<String> firstNode = new Node<>("zs");
+        Node<String> secondNode = new Node<>("ls");
+        Node<String> thirdNode = new Node<>("wu");
+        Node<String> fourthNode = new Node<>("zl");
+        firstNode.next = secondNode;
+        secondNode.next = thirdNode;
+        thirdNode.next = fourthNode;
+
+        // 2.链表的内容是什么。
+        Node<String> node = firstNode;
+
+        while (node != null) {
+            System.out.printf(node.data + " --> ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    @Test
+    public void testInit() {
+        Node<String> firstNode = new Node<>("zs");
+        Node<String> secondNode = new Node<>("ls");
+        Node<String> thirdNode = new Node<>("wu");
+        Node<String> fourthNode = new Node<>("zl");
+        firstNode.next = secondNode;
+        secondNode.next = thirdNode;
+        thirdNode.next = fourthNode;
+
+        NodeUtil.printNode(firstNode);
+
+        String[] milkTeas = {"茶百道", "书亦烧仙草", "蜜雪冰城", "七分甜"};
+        Node<String> headNode = NodeUtil.initNode(milkTeas);
+        NodeUtil.printNode(headNode);
+    }
+
+    @Test
+    public void testQuerySearch() {
+        // 查找 蜜雪冰城 的节点。
+        String[] milkTeas = {"茶百道", "书亦烧仙草", "蜜雪冰城", "七分甜"};
+        Node<String> headNode = NodeUtil.initNode(milkTeas);
+        Node<String> tmpNode = headNode;
+        Node<String> mixuebingchengNode = null;
+
+        while (tmpNode != null) {
+            if ("蜜雪冰城".equals(tmpNode.data)) {
+                mixuebingchengNode = tmpNode;
+                break;
+            }
+            tmpNode = tmpNode.next;
+        }
+        if (mixuebingchengNode != null) {
+            System.out.println(mixuebingchengNode.data);
+        }
+
+    }
+
+    @Test
+    public void testInsertNode() {
+        String[] milkTeas = {"茶百道", "书亦烧仙草", "蜜雪冰城", "七分甜"};
+        Node<String> headNode = NodeUtil.initNode(milkTeas);
+
+        NodeUtil.printNode(headNode);
+
+        // 书亦烧仙草 前面，添加一个奶茶  霸王茶姬
+        // 书亦烧仙草不会在第一个。
+        Node<String> newNode = new Node<>("霸王茶姬");
+
+        // 要找书亦烧仙草前面的一个数据。
+        Node<String> tmpNode = headNode;
+        Node<String> findNode = null;
+
+        while (tmpNode != null && tmpNode.next != null) {
+            if ("书亦烧仙草".equals(tmpNode.next.data)) {
+                findNode = tmpNode;
+                break;
+            }
+            tmpNode = tmpNode.next;
+        }
+
+        newNode.next = findNode.next;
+        findNode.next = newNode;
+
+        NodeUtil.printNode(headNode);
+    }
+}
+
+class Node<T> {
+    T data;
+    Node<T> next;
+
+    public Node(T data) {
+        this.data = data;
+    }
+
+    public Node(T data, Node<T> next) {
+        this.data = data;
+        this.next = next;
+    }
+}
